@@ -1,0 +1,101 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1>Réclamations</h1>
+    <p class="subtitle">Signalements et modération des avis</p>
+  </div>
+
+  <div class="card">
+
+    <form method="get" class="filters">
+
+      <div class="filters-left">
+
+        <div class="form-group">
+          <label>Statut</label>
+          <select name="statut">
+            <option value="">Tous</option>
+            <option value="En attente" <%= statut==='En attente'?'selected':'' %>>
+              En attente
+            </option>
+            <option value="Traitée" <%= statut==='Traitée'?'selected':'' %>>
+              Traitée
+            </option>
+            <option value="Rejetée" <%= statut==='Rejetée'?'selected':'' %>>
+              Rejetée
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Motif</label>
+          <select name="motif">
+            <option value="">Tous</option>
+            <option value="Contenu inapproprié">Contenu inapproprié</option>
+            <option value="Langage offensant">Langage offensant</option>
+            <option value="Avis mensonger">Avis mensonger</option>
+            <option value="Publicité / spam">Publicité / spam</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button class="btn filter-btn">
+            Filtrer
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+    <table class="table-elegant">
+
+      <thead>
+        <tr>
+          <th>Parfum</th>
+          <th>Auteur</th>
+          <th>Motif</th>
+          <th>Statut</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% reclamations.forEach(r => { %>
+          <tr>
+            <td class="strong"><%= r.review.parfum.nom %></td>
+            <td><%= r.user.prenom %> <%= r.user.nom %></td>
+            <td><%= r.motif %></td>
+            <td>
+              <span class="badge
+                <%= r.statut === 'Traitée' ? 'ok'
+                  : r.statut === 'Rejetée' ? 'no'
+                  : 'wait' %>">
+                <%= r.statut %>
+              </span>
+            </td>
+            <td>
+              <a
+                href="/backoffice/reclamations/<%= r._id %>"
+                class="btn small secondary">
+                Détails
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+
+        <% if (!reclamations.length) { %>
+          <tr>
+            <td colspan="5" class="empty">
+              Aucune réclamation enregistrée
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>

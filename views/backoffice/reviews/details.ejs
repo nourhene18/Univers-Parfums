@@ -1,0 +1,76 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1>Détails de l’avis</h1>
+    <p class="subtitle">Analyse et modération</p>
+  </div>
+
+  <div class="card">
+
+    <div class="meta">
+
+      <div class="meta-item">
+        <span>Parfum</span>
+        <p><%= review.parfum.nom %></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Utilisateur</span>
+        <p><%= review.user.prenom %> <%= review.user.nom %></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Note</span>
+        <p><strong><%= review.note %> ⭐</strong></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Visibilité</span>
+        <p>
+          <span class="badge">
+            <%= review.visible ? 'Visible' : 'Masqué' %>
+          </span>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="review-row">
+
+      <div class="review-comment">
+
+        <h3>Commentaire</h3>
+
+        <blockquote class="review-quote">
+          <%= review.commentaire || "Aucun commentaire." %>
+        </blockquote>
+
+      </div>
+
+      <form method="post"
+            action="/backoffice/reviews/<%= review._id %>/visibility"
+            class="review-toggle-form">
+
+        <input type="hidden"
+               name="visible"
+               value="<%= !review.visible %>">
+
+        <button class="btn">
+          <%= review.visible ? 'Masquer' : 'Rendre visible' %>
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <a href="/backoffice/reviews" class="btn">
+    Retour à la liste
+  </a>
+
+</div>

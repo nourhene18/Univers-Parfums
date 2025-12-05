@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Backoffice Univers Parfums</title>
+  <link rel="stylesheet" href="/css/backoffice.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-text">
+        <strong><a href="/backoffice/parfums">Univers Parfums</a></strong>
+        <span>Backoffice</span>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a href="/backoffice/parfums">Parfums</a>
+      <a href="/backoffice/brands">Marques</a>
+      <a href="/backoffice/reviews">Avis</a>
+      <a href="/backoffice/reclamations">Réclamations</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/backoffice/logout" class="logout">
+        Déconnexion
+      </a>
+    </div>
+
+  </aside>
+
+  <div class="main">
+
+    <main class="content">
+      <%- body %>
+    </main>
+
+  </div>
+
+</div>
+
+</body>
+</html>

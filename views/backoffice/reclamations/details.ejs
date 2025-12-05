@@ -1,0 +1,92 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1>Détails de la réclamation</h1>
+    <p class="subtitle">Analyse du signalement</p>
+  </div>
+
+  <div class="card">
+    <div class="meta">
+
+      <div class="meta-item">
+        <span>Auteur</span>
+        <p><%= reclamation.user.prenom %> <%= reclamation.user.nom %></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Parfum</span>
+        <p><%= reclamation.review.parfum.nom %></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Motif</span>
+        <p><%= reclamation.motif %></p>
+      </div>
+
+      <div class="meta-item">
+        <span>Statut</span>
+        <p>
+          <span class="badge
+            <%= reclamation.statut === 'Traitée' ? 'ok' :
+                reclamation.statut === 'Rejetée' ? 'no' : 'wait' %>">
+            <%= reclamation.statut %>
+          </span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Avis signalé</h2>
+
+    <blockquote class="review-quote">
+      <p class="review-note">
+        ⭐ <%= reclamation.review.note %>/5
+      </p>
+      <p><%= reclamation.review.commentaire %></p>
+    </blockquote>
+  </div>
+
+  <div class="card">
+    <h2>Description de la réclamation</h2>
+    <p>
+      <%= reclamation.description || "Aucune description fournie." %>
+    </p>
+  </div>
+
+  <% if (reclamation.statut === 'En attente') { %>
+
+    <div class="card actions-card">
+
+      <form method="post"
+            action="/backoffice/reclamations/<%= reclamation._id %>/traiter">
+        <button class="btn">
+          Traiter (masquer l’avis)
+        </button>
+      </form>
+
+      <form method="post"
+            action="/backoffice/reclamations/<%= reclamation._id %>/rejeter">
+        <button class="btn danger">
+          Rejeter
+        </button>
+      </form>
+
+    </div>
+
+  <% } else { %>
+
+    <div class="card info-card">
+      <p>
+        Cette réclamation a déjà été
+        <strong><%= reclamation.statut.toLowerCase() %></strong>.
+      </p>
+    </div>
+
+  <% } %>
+    <a href="/backoffice/reclamations" class="btn">
+      Retour à la liste
+    </a>
+
+</div>

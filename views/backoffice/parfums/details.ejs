@@ -1,0 +1,125 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1><%= parfum.nom %></h1>
+    <p class="subtitle">Fiche parfum</p>
+  </div>
+
+  <div class="card two-columns">
+
+  
+    <div>
+      <% if (parfum.image) { %>
+        <img src="<%= parfum.image %>" class="preview" alt="<%= parfum.nom %>">
+      <% } else { %>
+        <div class="preview placeholder">Aucune image</div>
+      <% } %>
+    </div>
+
+    <div class="details">
+
+      <div class="meta">
+        <div class="meta-item">
+          <span>Marque</span>
+          <p><%= parfum.marque.nom %></p>
+        </div>
+
+        <div class="meta-item">
+          <span>Genre</span>
+          <p><%= parfum.genre %></p>
+        </div>
+
+        <div class="meta-item">
+          <span>Statut</span>
+          <p><%= parfum.archived ? 'Archivé' : 'Visible' %></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Notes olfactives</h3>
+        <% if (parfum.notes?.length) { %>
+          <div class="tags">
+            <% parfum.notes.forEach(n => { %>
+              <span><%= n %></span>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="empty">Aucune note renseignée</p>
+        <% } %>
+      </div>
+
+      <div class="section">
+        <h3>Description</h3>
+        <p><%= parfum.description || "—" %></p>
+      </div>
+
+      <div class="details-actions">
+
+        <a href="/backoffice/parfums/<%= parfum._id %>/edit" class="btn">
+          Modifier
+        </a>
+
+        <form
+          method="post"
+          action="/backoffice/parfums/<%= parfum._id %>/<%= parfum.archived ? 'unarchive' : 'archive' %>"
+          onsubmit="return confirm('Confirmer cette action ?')">
+
+          <button class="btn <%= parfum.archived ? '' : 'secondary' %>">
+            <%= parfum.archived ? 'Rendre visible' : 'Archiver' %>
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  
+  <div class="card">
+
+    <div class="section">
+      <h2>Avis clients</h2>
+
+      <% if (!reviews.length) { %>
+        <p class="empty">Aucun avis pour ce parfum</p>
+      <% } %>
+    </div>
+
+    <% if (reviews.length) { %>
+      <div class="reviews">
+        <% reviews.forEach(r => { %>
+          <div class="review-item">
+            <div class="review-head">
+              <strong><%= r.note %> ⭐</strong>
+              <span class="badge">
+                <%= r.visible ? 'Visible' : 'Masqué' %>
+              </span>
+            </div>
+
+            <p class="review-text">
+              “<%= r.commentaire || '—' %>”
+            </p>
+
+            <p class="review-author">
+              <strong><% if (r.user) { %>
+  <%= r.user.prenom %> <%= r.user.nom %>
+<% } else { %>
+  <span class="text-danger">Utilisateur supprimé</span>
+<% } %>
+</strong>
+            </p>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+  </div>
+
+  <div style="margin-top: 24px;">
+    <a href="/backoffice/parfums" class="btn">
+      Retour à la liste
+    </a>
+  </div>
+
+</div>

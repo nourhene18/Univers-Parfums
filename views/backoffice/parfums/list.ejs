@@ -1,0 +1,124 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1>Parfums</h1>
+    <p class="subtitle">Gestion du catalogue</p>
+  </div>
+
+  <div class="card">
+
+    <form method="get" class="filters">
+
+      <div class="filters-left">
+
+        <div class="form-group">
+          <label>Recherche</label>
+          <input
+            type="text"
+            name="q"
+            placeholder="Nom ou description"
+            value="<%= q || '' %>">
+        </div>
+
+        <div class="form-group">
+          <label>Genre</label>
+          <select name="genre">
+            <option value="">Tous</option>
+            <% genres.forEach(g => { %>
+              <option value="<%= g %>" <%= genre===g?'selected':'' %>>
+                <%= g %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Marque</label>
+          <select name="brand">
+            <option value="">Toutes</option>
+            <% brands.forEach(b => { %>
+              <option value="<%= b._id %>"
+                <%= brand===String(b._id)?'selected':'' %>>
+                <%= b.nom %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Statut</label>
+          <select name="status">
+            <option value="">Tous</option>
+            <option value="active" <%= status==='active'?'selected':'' %>>
+              Actifs
+            </option>
+            <option value="archived" <%= status==='archived'?'selected':'' %>>
+              Archivés
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button type="submit" class="filter-btn">
+            Filtrer
+          </button>
+        </div>
+
+      </div>
+
+      <div class="filters-actions">
+        <a href="/backoffice/parfums/new" class="filter-btn">
+          Ajouter
+        </a>
+      </div>
+
+    </form>
+
+    <!-- TABLE -->
+    <table class="table-elegant">
+
+      <thead>
+        <tr>
+          <th>Parfum</th>
+          <th>Marque</th>
+          <th>Genre</th>
+          <th>Statut</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if (parfums.length) { %>
+          <% parfums.forEach(p => { %>
+            <tr>
+              <td class="strong"><%= p.nom %></td>
+              <td><%= p.marque?.nom || '—' %></td>
+              <td><span class="badge"><%= p.genre %></span></td>
+              <td>
+                <span class="badge">
+                  <%= p.archived ? 'Archivé' : 'Visible' %>
+                </span>
+              </td>
+              <td><%= p.createdAt.toLocaleDateString() %></td>
+              <td>
+                <a href="/backoffice/parfums/<%= p._id %>" class="btn small">
+                  Détails
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="6" class="empty">
+              Aucun parfum trouvé
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>

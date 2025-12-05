@@ -1,0 +1,92 @@
+<div class="page">
+<% if (error) { %>
+  <div class="alert alert-error">
+    <%= error %>
+  </div>
+<% } %>
+  <div class="page-header">
+    <h1>
+      <%= isEdit ? 'Modifier le parfum' : 'Nouveau parfum' %>
+    </h1>
+  </div>
+
+  <div class="card">
+
+    <form
+      method="post"
+      action="<%= isEdit
+        ? '/backoffice/parfums/' + parfum._id + '/edit'
+        : '/backoffice/parfums' %>"
+      class="form-stack">
+
+      <div class="form-group">
+        <label>Nom</label>
+        <input name="nom" required value="<%= parfum?.nom || '' %>">
+      </div>
+
+      <div class="form-group">
+        <label>Marque</label>
+        <select name="marque" required>
+          <% brands.forEach(b => { %>
+            <option value="<%= b._id %>"
+              <%= parfum?.marque == b._id ? 'selected' : '' %>>
+              <%= b.nom %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Genre</label>
+        <select name="genre">
+          <% ['Homme','Femme','Unisexe'].forEach(g => { %>
+            <option value="<%= g %>"
+              <%= parfum?.genre === g ? 'selected' : '' %>>
+              <%= g %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>URL de l’image</label>
+        <input name="image" value="<%= parfum?.image || '' %>">
+      </div>
+
+      <div class="form-group">
+        <label>Notes olfactives</label>
+        <div class="checkbox-grid">
+          <% [
+            'Floral','Boisé','Oriental','Fruité','Marin','Épicé',
+            'Citrus','Gourmand','Chypré','Musqué','Cuir','Poudré'
+          ].forEach(note => { %>
+            <label class="checkbox-item">
+              <input
+                type="checkbox"
+                name="notes[]"
+                value="<%= note %>"
+                <%= parfum?.notes?.includes(note) ? 'checked' : '' %>>
+              <span><%= note %></span>
+            </label>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="4"><%= parfum?.description || '' %></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn">
+          <%= isEdit ? 'Enregistrer' : 'Créer' %>
+        </button>
+        <a href="/backoffice/parfums" class="btn secondary">
+          Annuler
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+</div>

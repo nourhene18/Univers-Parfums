@@ -1,0 +1,39 @@
+<div class="page">
+
+  <div class="page-header center">
+    <h1>Marques</h1>
+    <p class="subtitle">Gestion des marques</p>
+  </div>
+
+  <div class="card">
+
+    <div style="margin-bottom: 24px;">
+      <a href="/backoffice/brands/new" class="btn">
+        Ajouter une marque
+      </a>
+    </div>
+
+    <table class="table-elegant">
+
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Pays</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% brands.forEach(b => { %>
+          <tr>
+            <td class="strong"><%= b.nom %></td>
+            <td><%= b.pays %></td>
+            <td><%= b.type %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
